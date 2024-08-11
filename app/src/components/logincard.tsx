@@ -27,8 +27,7 @@ const Input: React.FC<InputProps> =
 // TODO: Add functinality! - REMEMBER ABOUT HASH FUNCTION
 const LoginCard = () => {
     return (
-        <div className="border-2 rounded-xl p-4 border-gray-300 shadow-xl
-">
+        <div className="border-2 rounded-xl p-4 border-gray-300 shadow-xl">
             <div className="font-bold text-2xl mb-5">
                 Logowanie
             </div>
