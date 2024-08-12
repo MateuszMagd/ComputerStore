@@ -7,7 +7,7 @@ interface ItemCardProps {
     photo: string; // Photo
     money: string;
     type: string; // For this case only 3: GPU, CPU, Motherboard
-    specs: string; // Specs for component part -> as whole string with '/' as seprataor
+    specs?: string; // Specs for component part -> as whole string with '/' as seprataor
     height: number;
     width: number;
 }
@@ -48,6 +48,8 @@ interface MotherboardProps {
 const ItemCard: React.FC<ItemCardProps> = async ({photo, money, type, specs, height, width}) => {
     return (
         <>
+            {specs ?
+            // This is with spec -> bigger/smaller window 
             <div className="flex flex-row border-2 p-10 border-slate-400 bg-white rounded-3xl shadow-2xl shadow-gray-500">
                 <Image src={photo} alt='Alterantve' width={width} height={height} className='mr-5'/>
                 <div
@@ -55,17 +57,30 @@ const ItemCard: React.FC<ItemCardProps> = async ({photo, money, type, specs, hei
                 </div>
                 <div className='ml-5 '>
                     <div className='mb-20'>
-                        <h1 className='font-bold text-2xl'>Specification</h1>
+                        {specs.length === 0 ?  <></> : <h1 className='font-bold text-2xl'>Specification</h1>}
                         {type === "CPU" ? <ProcesorCard specs={specs}/>: <></>}
                         {type === "GPU" ? <GraphicCard specs={specs}/>: <></>}
                         {type === "Motherboard" ? <MotherboardCard specs={specs}/>: <></>}  
                     </div>
                     <div className='flex flex-col justify-center'>
                         <h1 className='font-bold text-4xl mb-5'>{money} zł</h1>
-                        <button className='border-1 border-black bg-black text-white rounded-md p-2 text-xl'> Add to cart! </button>
+                        <button className='border-1 border-black bg-black text-white rounded-md p-2 text-xl'> Show me </button>
+                    </div>
+                </div>
+            </div> : 
+            // This is when we dont have spec -> small window
+            <div className="flex flex-col border-2 p-10 border-slate-400 bg-white rounded-3xl shadow-2xl shadow-gray-500">
+                <Image src={photo} alt='Alterantve' width={width} height={height} className='mr-5'/>
+                <hr className="my-6 h-0.5 border-t-0 bg-black dark:bg-black" />
+                <div className=''>
+                    <div className='flex flex-col justify-center'>
+                        <h1 className='font-bold text-4xl mb-5 text-center'>{money} zł</h1>
+                        <button className='border-1 border-black bg-black text-white rounded-md p-2 text-xl'> Show me </button>
                     </div>
                 </div>
             </div>
+            }
+            
         </>
     );
 };
@@ -90,12 +105,12 @@ const GraphicCard: React.FC<ComponentProps> = ({specs}) => {
     const [memoryType, RAMAmount, dataBus, connectorType, cooling, multipleMonitorSupport] = specs.split("/");
     return (
         <div>
-            <p>Memory Type: {memoryType}</p>
-            <p>Ram amount: {RAMAmount}</p>
-            <p>Data buss: {dataBus}</p>
-            <p>Connector Type: {connectorType}</p>
-            <p>Cooling: {cooling}</p>
-            <p>Multiple Monitor Support: {multipleMonitorSupport}</p>
+            {memoryType ? <p>Memory Type: {memoryType}</p> : <></>}
+            {RAMAmount ? <p>Ram amount: {RAMAmount}</p> : <></>}
+            {dataBus ? <p>Data buss: {dataBus}</p> : <></>}
+            {connectorType ? <p>Connector Type: {connectorType}</p> : <></>}
+            {cooling ? <p>Cooling: {cooling}</p> : <></>}
+            {multipleMonitorSupport ? <p>Multiple Monitor Support: {multipleMonitorSupport}</p> : <></>}
         </div>
     )
 }
@@ -105,12 +120,12 @@ const MotherboardCard: React.FC<ComponentProps> = ({specs}) => {
     const [format, processorSocket, chipset, maximumMemorySize, memoryType, numberOfMemoryBanks] = specs.split("/");
     return (
         <div>
-            <p>Format: {format}</p>
-            <p>Processor Socket: {processorSocket}</p>
-            <p>Chipset: {chipset}</p>
-            <p>Maximum Memory Size: {maximumMemorySize}</p>
-            <p>Memory Type: {memoryType}</p>
-            <p>Number Of Memory Banks: {numberOfMemoryBanks}</p>
+            {format ? <p>Format: {format}</p> : <></>}
+            {processorSocket ? <p>Processor Socket: {processorSocket}</p> : <></>}
+            {chipset ? <p>Chipset: {chipset}</p> : <></>}
+            {maximumMemorySize ? <p>Maximum Memory Size: {maximumMemorySize}</p> : <></>}
+            {memoryType ? <p>Memory Type: {memoryType}</p> : <></>}
+            {numberOfMemoryBanks ? <p>Number Of Memory Banks: {numberOfMemoryBanks}</p> : <></>}
         </div>
     )
 }
