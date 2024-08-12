@@ -22,7 +22,10 @@ export default function RootLayout({
         <div>
           <Navbar />
         </div>
-        {children}
+        <div className= "bg-slate-200">
+          {children}
+        </div>
+        
         <div>
           <Footer />
         </div>
