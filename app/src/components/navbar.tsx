@@ -6,13 +6,12 @@ const Navbar: React.FC = () => {
     return (
         <div className='flex p-2 border-b-2 border-slate-400 shadow-md shadow-gray-500 justify-between'>
             <div className='flex p-2'>
-                <Link href='./' className='items-center text-center font-bold text-xl'> ComputerShop.net </Link>
-                <Link href='./my-info' className=''> USER INFO - TEMP </Link>
+                <Link href='/' className='items-center text-center font-bold text-xl'> ComputerShop.net </Link>
             </div>
             <div className='flex p-2 space-x-4 justify-end'>
-                <Link href='./' className=''> <Heart /> </Link>
-                <Link href='./login' className=''> <UserRound /> </Link>
-                <Link href='./' className=''> <ShoppingCart /> </Link>
+                <Link href='/user/favorite' className=''> <Heart /> </Link>
+                <Link href='/login' className=''> <UserRound /> </Link>
+                <Link href='/' className=''> <ShoppingCart /> </Link>
             </div>
         </div>
     )
