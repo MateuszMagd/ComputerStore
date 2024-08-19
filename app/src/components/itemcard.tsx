@@ -2,8 +2,9 @@ import React from 'react';
 import { promises as fs } from 'fs'
 import path from 'path';
 import Image from 'next/image';
+import Link from 'next/link';
 
-interface ItemCardProps {
+export interface ItemCardProps {
     photo: string; // Photo
     money: string;
     type: string; // For this case only 3: GPU, CPU, Motherboard
@@ -75,7 +76,7 @@ const ItemCard: React.FC<ItemCardProps> = async ({photo, money, type, specs, hei
                 <div className=''>
                     <div className='flex flex-col justify-center'>
                         <h1 className='font-bold text-4xl mb-5 text-center'>{money} zł</h1>
-                        <button className='border-1 border-black bg-black text-white rounded-md p-2 text-xl'> Show me </button>
+                        <Link className='border-1 border-black bg-black text-white rounded-md p-2 text-xl text-center' href=""> Show me </Link>
                     </div>
                 </div>
             </div>
@@ -85,7 +86,7 @@ const ItemCard: React.FC<ItemCardProps> = async ({photo, money, type, specs, hei
     );
 };
 
-const ProcesorCard: React.FC<ComponentProps> = ({specs}) => {
+export const ProcesorCard: React.FC<ComponentProps> = ({specs}) => {
     const [model, cores, threads, clockFrequency, cache, socketType] = specs.split("/");
 
     return (
@@ -100,8 +101,7 @@ const ProcesorCard: React.FC<ComponentProps> = ({specs}) => {
     )
 }
 
-// TODO: Add as above
-const GraphicCard: React.FC<ComponentProps> = ({specs}) => {
+export const GraphicCard: React.FC<ComponentProps> = ({specs}) => {
     const [memoryType, RAMAmount, dataBus, connectorType, cooling, multipleMonitorSupport] = specs.split("/");
     return (
         <div>
@@ -115,8 +115,7 @@ const GraphicCard: React.FC<ComponentProps> = ({specs}) => {
     )
 }
 
-// TODO: Same as above xd
-const MotherboardCard: React.FC<ComponentProps> = ({specs}) => {
+export const MotherboardCard: React.FC<ComponentProps> = ({specs}) => {
     const [format, processorSocket, chipset, maximumMemorySize, memoryType, numberOfMemoryBanks] = specs.split("/");
     return (
         <div>
@@ -129,6 +128,5 @@ const MotherboardCard: React.FC<ComponentProps> = ({specs}) => {
         </div>
     )
 }
-
 
 export default ItemCard;
