@@ -48,6 +48,14 @@ public class Product {
         this.sessionId = UUID.randomUUID().toString();
     }
 
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
     @Nonnull
     public String getName() {
         return name;

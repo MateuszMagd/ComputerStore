@@ -6,11 +6,12 @@ import Link from 'next/link';
 
 export interface ItemCardProps {
     photo: string; // Photo
-    money: string;
+    money: number;
     type: string; // For this case only 3: GPU, CPU, Motherboard
     specs?: string; // Specs for component part -> as whole string with '/' as seprataor
     height: number;
     width: number;
+    sessionId: string
 }
 
 interface ComponentProps {
@@ -46,7 +47,7 @@ interface MotherboardProps {
 }
 
 
-const ItemCard: React.FC<ItemCardProps> = async ({photo, money, type, specs, height, width}) => {
+const ItemCard: React.FC<ItemCardProps> = async ({photo, money, type, specs, height, width, sessionId}) => {
     return (
         <>
             {specs ?
@@ -58,14 +59,14 @@ const ItemCard: React.FC<ItemCardProps> = async ({photo, money, type, specs, hei
                 </div>
                 <div className='ml-5 '>
                     <div className='mb-20'>
-                        {specs.length === 0 ?  <></> : <h1 className='font-bold text-2xl'>Specification</h1>}
+                        {specs.length === 0 ?  <></> : <h1 className='font-bold text-2xl'>Specification </h1>}
                         {type === "CPU" ? <ProcesorCard specs={specs}/>: <></>}
                         {type === "GPU" ? <GraphicCard specs={specs}/>: <></>}
                         {type === "Motherboard" ? <MotherboardCard specs={specs}/>: <></>}  
                     </div>
                     <div className='flex flex-col justify-center'>
                         <h1 className='font-bold text-4xl mb-5'>{money} zł</h1>
-                        <button className='border-1 border-black bg-black text-white rounded-md p-2 text-xl'> Show me </button>
+                        <Link href={"/component/"+sessionId} className='border-1 border-black bg-black text-white rounded-md p-2 text-xl text-center'> Show me </Link>
                     </div>
                 </div>
             </div> : 
@@ -76,9 +77,10 @@ const ItemCard: React.FC<ItemCardProps> = async ({photo, money, type, specs, hei
                 <div className=''>
                     <div className='flex flex-col justify-center'>
                         <h1 className='font-bold text-4xl mb-5 text-center'>{money} zł</h1>
-                        <Link className='border-1 border-black bg-black text-white rounded-md p-2 text-xl text-center' href=""> Show me </Link>
+                        <Link href={"/component/"+sessionId} className='border-1 border-black bg-black text-white rounded-md p-2 text-xl '> Show me </Link>
                     </div>
                 </div>
+               
             </div>
             }
             

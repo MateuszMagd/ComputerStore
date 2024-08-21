@@ -1,12 +1,28 @@
-import ItemCard from "@/components/itemcard";
-import ShopCard from "@/components/shopcard";
+import Home from "@/components/pages/home";
+import { Product } from "@/components/interfaces/data";
+import { fetchProductBySessionId } from "@/components/server-components/fetch-data";
+import Item from "@/components/pages/item";
 
-const Item = ({params}: {params: {id: string}}) => {
+
+
+export default async function Page({params}: {params: {id: string}}) {
+  let product: Product | null = null
+
+  try {
+    product = await fetchProductBySessionId({sessionId: params.id});
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+
+  if(product === null){
     return (
-        <div className="px-10 py-5">
-            <ShopCard photo="/products/1/Karta-graficzna-GIGABYTE-GeForce-RTX-4070-Windforce-OC-12GB-front-skos-box.jpg" height={600} width={600} inStorage="10" money="2650.50" type="GPU" specs="GDDR 6X/12288/192/PCI Express 4.0 x16/Aktywne/4" />
-        </div>
-    )
+        <div>Something went wrong. . .</div>
+    ) 
+  }
+  else{
+    return (
+        <Item product={product} />
+      );
+  }
+  
 }
-
-export default Item;

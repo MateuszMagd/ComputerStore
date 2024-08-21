@@ -4,6 +4,8 @@ import com.app.backend.entities.Product;
 import com.app.backend.repository.ProductRepository;
 import com.app.backend.service.interfaces.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,12 +23,13 @@ public class ProductService implements IProductService {
 
     @Override
     public List<Product> getFiveProducts() {
-        return null;
+        Pageable limit = PageRequest.of(0, 5); // First page, 5 items
+        return productRepository.getFiveProducts(limit);
     }
 
 
     @Override
     public Product getProductBySessionId(String sessionId) {
-        return null;
+        return productRepository.getProductsBySessionId(sessionId);
     }
 }

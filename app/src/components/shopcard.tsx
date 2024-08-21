@@ -1,10 +1,9 @@
 import { ProcesorCard, GraphicCard, MotherboardCard, ItemCardProps } from "./itemcard"
 import React from "react"
 import Image from "next/image"
-import Input from "postcss/lib/input"
 
 interface ShopCardProps extends ItemCardProps{
-    inStorage: string
+    inStorage: number
 }
 
 const ShopCard: React.FC<ShopCardProps> = async ({photo, money, type, specs, height, width, inStorage}) => {
