@@ -86,6 +86,7 @@ const ItemCard: React.FC<ItemCardProps> = async ({photo, money, type, specs, hei
     );
 };
 
+// THIS IS SPEC FOR TEST SUBJECT: "AMD Ryzen 5/5/12/3,9/38/Socket AM5"
 export const ProcesorCard: React.FC<ComponentProps> = ({specs}) => {
     const [model, cores, threads, clockFrequency, cache, socketType] = specs.split("/");
 
@@ -101,6 +102,8 @@ export const ProcesorCard: React.FC<ComponentProps> = ({specs}) => {
     )
 }
 
+
+// THIS IS SPEC FOR TEST SUBJECT: "GDDR 6X/12288/192/PCI Express 4.0 x16/Aktywne/4"
 export const GraphicCard: React.FC<ComponentProps> = ({specs}) => {
     const [memoryType, RAMAmount, dataBus, connectorType, cooling, multipleMonitorSupport] = specs.split("/");
     return (
@@ -115,6 +118,7 @@ export const GraphicCard: React.FC<ComponentProps> = ({specs}) => {
     )
 }
 
+// THIS IS SPEC FOR TEST SUBJECT: "ATX/Socket 1700/Intel B760/256/DDR 5/4 x DIMM"
 export const MotherboardCard: React.FC<ComponentProps> = ({specs}) => {
     const [format, processorSocket, chipset, maximumMemorySize, memoryType, numberOfMemoryBanks] = specs.split("/");
     return (
