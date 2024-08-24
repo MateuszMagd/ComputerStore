@@ -4,6 +4,7 @@ import com.app.backend.Enums.ProductType;
 import com.app.backend.Enums.StatusType;
 import com.app.backend.entities.*;
 import com.app.backend.repository.*;
+import com.app.backend.utils.PasswordHasher;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -47,9 +48,12 @@ public class RunAtStart {
     public CommandLineRunner runner() {
         return args -> {
             // ********** Users **********
-            User user1 = new User("mateuszmag7@gmail.com", "test", "Mateusz", "Magdzinski", null, null, null, null, true, Date.valueOf("2024-08-15"));
-            User user2 = new User("imagination@gmail.com", "test2", "Anna", "Nowak", "111222333", "someplace", "somecity", "somecoutry", false, Date.valueOf("2024-08-19"));
-            User user3 = new User("imaginationlol@gmail.com", "test3", "Wojtek", "Kowalski", "333222111", "someplace", "somecity", "somecoutry", false, Date.valueOf("2024-08-18"));
+
+            String salt = PasswordHasher.generateSalt();
+
+            User user1 = new User("mateuszmag7@gmail.com", PasswordHasher.hashPasswordWithSalt("test", salt), salt, "Mateusz", "Magdzinski", null, null, null, null, true, Date.valueOf("2024-08-15"));
+            User user2 = new User("imagination@gmail.com", PasswordHasher.hashPasswordWithSalt("test2", salt), salt, "Anna", "Nowak", "111222333", "someplace", "somecity", "somecoutry", false, Date.valueOf("2024-08-19"));
+            User user3 = new User("imaginationlol@gmail.com", PasswordHasher.hashPasswordWithSalt("test3", salt), salt, "Wojtek", "Kowalski", "333222111", "someplace", "somecity", "somecoutry", false, Date.valueOf("2024-08-18"));
 
             userRepository.save(user1);
             userRepository.save(user2);

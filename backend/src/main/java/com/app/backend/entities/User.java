@@ -20,6 +20,8 @@ public class User {
     @Nonnull
     private String passwordHash;
     @Nonnull
+    private String salt;
+    @Nonnull
     private String firstName;
     @Nonnull
     private String lastName;
@@ -33,13 +35,12 @@ public class User {
     private Date lastLogin;
 
     public User() {
-        this.sessionId = UUID.randomUUID().toString();
     }
 
-    public User(@Nonnull String email, @Nonnull String passwordHash, @Nonnull String firstName, @Nonnull String lastName,
-                String phoneNumber, String address, String city, String country, @Nonnull Boolean isAdmin, @Nonnull Date date) {
+    public User(@Nonnull String email, @Nonnull String passwordHash, @Nonnull String salt, @Nonnull String firstName, @Nonnull String lastName, String phoneNumber, String address, String city, String country, @Nonnull Boolean isAdmin, @Nonnull Date lastLogin) {
         this.email = email;
         this.passwordHash = passwordHash;
+        this.salt = salt;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -47,8 +48,25 @@ public class User {
         this.city = city;
         this.country = country;
         this.isAdmin = isAdmin;
-        this.lastLogin = date;
+        this.lastLogin = lastLogin;
         this.sessionId = UUID.randomUUID().toString();
+    }
+
+    @Nonnull
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(@Nonnull String salt) {
+        this.salt = salt;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     @Nonnull

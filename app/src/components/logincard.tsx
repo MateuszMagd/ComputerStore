@@ -1,5 +1,8 @@
-import Link from 'next/link';
-import React from "react";
+"use client"
+
+import axios from 'axios';
+import React, { FormEvent, useState } from "react";
+import { saveToken } from './server-components/logger-handler';
 
 interface InputProps{
     type: string
@@ -10,42 +13,77 @@ interface InputProps{
     labelString: string
 }
 
-const Input: React.FC<InputProps> = 
-        ({type, id, htmlFor, classNamesLabel, classNames, labelString}) => {
-    return (
-        <div>
-                    <label htmlFor={htmlFor} className={classNamesLabel}>{labelString}</label>
-                    <input
-                    type={type}
-                    id={id}
-                    className={classNames}
-                    required/>
-        </div>
-    )
-}
-
-// TODO: Add functinality! - REMEMBER ABOUT HASH FUNCTION
 const LoginCard = () => {
-    return (
-        <div className="border-2 rounded-xl p-4 bg-white border-gray-300 shadow-xl">
-            <div className="font-bold text-2xl mb-5">
-                Logowanie
-            </div>
-            <form className="p-5 bg-light-blue rounded-md w-full max-w-sm"> {/* Add onsubmit */}
-                <div className="mb-5">
-                    <Input type="email" id="email" htmlFor="email" labelString="Nazwa użytkownika" classNamesLabel="block text-sm font-medium " classNames="w-full px-16 py-2 mt-1 border rounded-full shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"/>
-                    <Input type="password" id="password" htmlFor="password" labelString="Hasło" classNamesLabel="block text-sm font-medium mt-2" classNames="w-full px-16 py-2 mt-1 border rounded-full shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
-                </div>
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [token, setToken] = useState('');
 
+    const handleSubmit = async (e: FormEvent) => {
+        try { 
+            e.preventDefault();
+            const response = await axios.post('http://localhost:8090/api/authenticate', {
+                email,
+                password,
+                });
+            
+            // Setting token
+            const token = response.data.token;
+            setToken(token);
+            setError('');
+            saveToken(token);
+            window.location.href = "/";
+
+        } catch (err) {
+            setError('Invalid email or password');
+            setToken('');
+        }
+    }
+    
+
+    return (
+        <div className="flex items-center justify-center min-h-screen">
+            <div className='bg-white p-8 border-2 rounded-sm border-slate-200 shadow-sm shadow-gray-500'>
+                <form onSubmit={handleSubmit} className="p-5 bg-light-blue rounded-md w-full max-w-sm">
+                <h2 className="mb-4 p-5 text-2xl font-bold text-center">Login</h2>
+                {error && <p className="mb-4 text-red-500">{error}</p>}
+                <div className="mb-4">
+                    <label htmlFor="email" className="block text-sm font-medium ">Username</label>
+                    <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-4 py-2 mt-1 border rounded-full shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                    />
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="password" className="block text-sm font-medium">Password</label>
+                    <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-4 py-2 mt-1 border rounded-full shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                    />
+                </div>
                 <button
                     type="submit"
-                    className="w-full px-4 py-2 bg-black text-white  focus:outline-none focus:ring-2 ">
-                    ZALOGUJ
+                    className="w-full px-4 py-2 text-white bg-black rounded-full  focus:outline-none focus:ring-2 "
+                >
+                    Login
                 </button>
-            </form>
-            <div className='flex flex-col mt-2 p-5 text-left'>
-                <Link href="./" className='mb-4'>Did you forget password?</Link>
-                <Link href="./">New account?</Link>
+                </form>
+                <div className='mt-2 p-5 text-center'>
+                <div className='w-full mb-2'>
+                    <a >Forget password?</a>
+                </div>
+                <div className='w-full'>
+                    <a >New account?</a>
+                </div>
+                </div>
             </div>
         </div>
     )

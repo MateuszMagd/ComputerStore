@@ -6,7 +6,6 @@ import { Product } from "@/components/interfaces/data";
 import React from "react";
 
 export default function Home({ ourBestProducts }: { ourBestProducts: Product[] }) {
-
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-12">
             <div className="flex flex-row w-full mb-5">
