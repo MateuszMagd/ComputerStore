@@ -32,4 +32,14 @@ public class ProductService implements IProductService {
     public Product getProductBySessionId(String sessionId) {
         return productRepository.getProductsBySessionId(sessionId);
     }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    @Override
+    public void save(Product product) {
+        productRepository.save(product);
+    }
 }

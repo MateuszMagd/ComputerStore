@@ -19,13 +19,38 @@ public class CartItemService implements ICartItemService {
         this.cartItemRepository = cartItemRepository;
     }
 
-    public List<CartItem> getCartItemByCart(Cart cart, int limit) {
-        PageRequest pageRequest = PageRequest.of(limit-3, limit);
-        List<CartItem> cartItem = cartItemRepository.findCartItemsByCartId(cart, pageRequest);
-        if(cartItem != null) {
-            return cartItem;
-        }
+    @Override
+    public List<CartItem> getCartItemByCart(Cart cart, int page) {
+        PageRequest pageRequest = PageRequest.of(page, 5);
+        return cartItemRepository.findCartItemsByCartId(cart, pageRequest);
+    }
+    @Override
+    public void createNewItemCart(CartItem cartItem) {
+        cartItemRepository.save(cartItem);
+    }
 
-        return null;
+    @Override
+    public void deleteItemCart(CartItem cartItem) {
+        cartItemRepository.delete(cartItem);
+    }
+
+    @Override
+    public CartItem getCartItemBySessionId(String sessionId) {
+        return cartItemRepository.findCartItemBySessionId(sessionId);
+    }
+
+    @Override
+    public List<CartItem> getAllCartItems(Cart cart) {
+        return cartItemRepository.findAllByCartId(cart);
+    }
+
+    @Override
+    public int countCartItemByCart(Cart cart) {
+        return cartItemRepository.countByCartId(cart);
+    }
+
+    @Override
+    public void deleteAllByCart(Cart cart) {
+        cartItemRepository.deleteAllByCartId(cart);
     }
 }

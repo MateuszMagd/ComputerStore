@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Heart, UserRound } from 'lucide-react';
+import { ShoppingCart, Heart, UserRound, Archive } from 'lucide-react';
 import { clearToken, getToken } from './server-components/logger-handler';
 
 const Navbar: React.FC = () => {
@@ -11,7 +11,6 @@ const Navbar: React.FC = () => {
     useEffect(() => {
         const savedToken = getToken();
         setToken(savedToken);
-        console.log("TOKEN:" + savedToken); // Zaktualizowane, aby wyświetlać zapisany token
     }, []);
 
     return (
@@ -20,11 +19,13 @@ const Navbar: React.FC = () => {
                 <Link href='/' className='items-center text-center font-bold text-xl'>ComputerShop.net</Link>
             </div>
             <div className='flex p-2 space-x-4 justify-end'>
-                <Link href='/user/favorite' className=''> <Heart /> </Link>
+                {token ? (
+                    <Link href="/user/my-info"> <Archive /> </Link>
+                ) : <></>}
                 {token ? (
                     <button onClick={() => { 
                         clearToken();
-                        window.location.reload(); // Przekierowanie na stronę główną
+                        window.location.reload();
                     }}>Logout</button> 
                 ) : (
                     <Link href='/login' className=''> <UserRound /> </Link>

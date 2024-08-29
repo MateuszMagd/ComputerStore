@@ -1,9 +1,8 @@
-package com.app.backend.utils;
+package com.app.backend.utils.converters;
 
 import com.app.backend.dto.ProductDto;
 import com.app.backend.entities.Product;
 
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;

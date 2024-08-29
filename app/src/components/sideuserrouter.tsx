@@ -9,7 +9,6 @@ const SideUserRouter = ({currentPage}: {currentPage: String}) => {
             </div>
             
             <div className="flex flex-col">
-                <Link href="/user/favorite" className="flex flex-row"><ArrowRight/> Go to favorite</Link>
                 <Link href="/user/my-info" className="flex flex-row"><ArrowRight/> Go to my info</Link>
             </div>
         </div>

@@ -1,4 +1,4 @@
-package com.app.backend.utils;
+package com.app.backend.utils.converters;
 
 import com.app.backend.dto.CartItemDto;
 import com.app.backend.entities.CartItem;
@@ -21,7 +21,7 @@ public class CartToDTOConverter {
         dto.setSessionId(product.getSessionId());
         dto.setPrice(product.getPrice());
         dto.setQuantity(cartItem.getQuantity());
-
+        dto.setSessionCartId(cartItem.getSessionId());
         return dto;
     }
 

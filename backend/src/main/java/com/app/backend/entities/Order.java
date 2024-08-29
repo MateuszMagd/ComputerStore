@@ -16,6 +16,8 @@ public class Order {
     private Long id;
     @Column(unique = true)
     private String sessionId;
+
+
     @Nonnull
     private String name;
     @Nonnull

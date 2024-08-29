@@ -19,7 +19,8 @@ public class CartService implements ICartService {
         this.userRepository = userRepository;
     }
 
-    public Cart getCartByUserSessionId(String email) {
+    @Override
+    public Cart getCartByUserEmail(String email) {
         User user = userRepository.getUserByEmail(email);
         if( user != null ) {
             return cartRepository.findCartsByUserId(user);
@@ -27,5 +28,20 @@ public class CartService implements ICartService {
 
         return null;
     }
+
+    @Override
+    public void createNewCartForUser(User user) {
+        cartRepository.save(new Cart(user));
+    }
+
+    @Override
+    public void createNewCartWithEmail(String email) {
+        User user = userRepository.getUserByEmail(email);
+        if( user != null ) {
+            cartRepository.save(new Cart(user)) ;
+        }
+    }
+
+
 
 }
