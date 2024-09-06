@@ -2,6 +2,7 @@ package com.app.backend.service.interfaces;
 
 import com.app.backend.entities.Cart;
 import com.app.backend.entities.CartItem;
+import com.app.backend.entities.Product;
 
 import java.util.List;
 
@@ -17,5 +18,9 @@ public interface ICartItemService {
 
     int countCartItemByCart(Cart cart);
 
+    void delete(CartItem cart);
+
     void deleteAllByCart(Cart cart);
+
+    List<CartItem> getAllCartItemsByProduct(Product product);
 }

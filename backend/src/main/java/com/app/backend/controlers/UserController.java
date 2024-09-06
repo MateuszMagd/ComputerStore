@@ -169,5 +169,80 @@ public class UserController {
         }
     }
 
+    @GetMapping("/get/user/{email}")
+    public ResponseEntity<?> getUserByEmail(@RequestHeader("Authorization") String token,
+                                            @PathVariable String email)
+    {
+        try {
+            Claims claims = JwtTokenUtill.verifyToken(token);
+            User user = userService.getUserByEmail(claims.get("email", String.class));
+            if(!user.getAdmin()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
 
+            User user_client = userService.getUserByEmail(email);
+            if(user_client == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(user_client);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
+
+    @PostMapping("/post/user/update")
+    public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String token,
+                                        @RequestBody UserNewDto userNewDto,
+                                        @RequestParam("email") String email) {
+        try {
+            Claims claims = JwtTokenUtill.verifyToken(token);
+            User user = userService.getUserByEmail(claims.get("email", String.class));
+            if(!user.getAdmin()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+            User user_to_update = userService.getUserByEmail(email);
+            if(user_to_update == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            if(userNewDto.getPassword().length() < 5) {
+                user_to_update.setPasswordHash(PasswordHasher.hashPasswordWithSalt(userNewDto.getPassword(), user_to_update.getSalt()));
+            }
+            user_to_update.setFirstName(userNewDto.getName());
+            user_to_update.setLastName(userNewDto.getLastName());
+            user_to_update.setCountry(userNewDto.getCountry());
+            user_to_update.setEmail(userNewDto.getEmail());
+            user_to_update.setCity(userNewDto.getCity());
+            user_to_update.setPhoneNumber(userNewDto.getPhoneNumber());
+            user_to_update.setAddress(userNewDto.getAddress());
+            userService.updateUser(user_to_update);
+
+            return ResponseEntity.ok("Ok");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String token,
+                                        @RequestBody String email) {
+        try {
+            Claims claims = JwtTokenUtill.verifyToken(token);
+            User user = userService.getUserByEmail(claims.get("email", String.class));
+            if (!user.getAdmin()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+            User user1 = userService.getUserByEmail(email);
+            if(user1 == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            userService.delete(user1);
+            return ResponseEntity.ok("Ok");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+    }
 }

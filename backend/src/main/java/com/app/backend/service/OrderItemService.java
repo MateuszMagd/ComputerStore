@@ -1,7 +1,9 @@
 package com.app.backend.service;
 
 import com.app.backend.Enums.StatusType;
+import com.app.backend.entities.CartItem;
 import com.app.backend.entities.OrderItem;
+import com.app.backend.entities.Product;
 import com.app.backend.entities.User;
 import com.app.backend.repository.OrderItemRepository;
 import com.app.backend.service.interfaces.IOrderItemService;
@@ -24,6 +26,16 @@ public class OrderItemService implements IOrderItemService {
         for(OrderItem orderItem : orderItemList) {
             orderItemRepository.save(orderItem);
         }
+    }
+
+    @Override
+    public void deleteOrderItem(OrderItem item) {
+        orderItemRepository.delete(item);
+    }
+
+    @Override
+    public List<OrderItem> findAllOrderItemByProduct(Product product) {
+        return orderItemRepository.findAllByProductId(product);
     }
 
 

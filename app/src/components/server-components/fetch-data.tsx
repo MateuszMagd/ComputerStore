@@ -104,6 +104,7 @@ export const fetchIsUserAdmin = async (): Promise<boolean> => {
   return response.data;
 }
 
+
 export const fetchAllUsers = async(): Promise<User[]> => {
   const token = getToken();
   if(!token) {
@@ -146,4 +147,26 @@ export const fetchAllProducts = async (): Promise<Product[]> => {
       console.error("Error fetching products:", error);
       throw error;
   }
+};
+
+
+export const fetchUserByEmail = async (email: string): Promise<User> => {
+  try {
+    const token = getToken();
+    if(!token) {
+      throw new Error('Token not found');
+    }
+    const response = await axios.get<User>(`http://localhost:8090/api/user/get/user/${email}`, {
+      headers: {
+        'Authorization': `${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
+  }
+  
+
 };

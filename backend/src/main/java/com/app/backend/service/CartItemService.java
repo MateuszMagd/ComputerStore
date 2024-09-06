@@ -2,6 +2,7 @@ package com.app.backend.service;
 
 import com.app.backend.entities.Cart;
 import com.app.backend.entities.CartItem;
+import com.app.backend.entities.Product;
 import com.app.backend.repository.CartItemRepository;
 import com.app.backend.service.interfaces.ICartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,21 @@ public class CartItemService implements ICartItemService {
     }
 
     @Override
+    public void delete(CartItem cart) {
+        cartItemRepository.delete(cart);
+    }
+
+
+    @Override
     public void deleteAllByCart(Cart cart) {
         cartItemRepository.deleteAllByCartId(cart);
     }
+
+
+
+    @Override
+    public List<CartItem> getAllCartItemsByProduct(Product product) {
+        return cartItemRepository.findAllByProductId(product);
+    }
+
 }

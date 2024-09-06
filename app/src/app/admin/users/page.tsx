@@ -15,7 +15,6 @@ const UsersPage = () => {
         const fetchUsers = async() => {
             try {
                 const data = await fetchAllUsers();
-
                 setIsLoading(false)
                 setUsers(data);
             } catch (error) {
@@ -36,14 +35,12 @@ const UsersPage = () => {
         return <div className="flex flex-row justify-center min-h-screen">{error}</div>;
     }
 
-    // TODO: MAKE IT
-    const handleDelete = (user: User) => {
-        alert(`Usuń użytkownika: ${user.email}`);
+    const handleDelete = (email: string) => {
+        window.location.href = `/admin/delete-user/${email}`;
     };
 
-    // TODO: MAKE IT
-    const handleModify = (user: User) => {
-        alert(`Modyfikuj użytkownika: ${user.email}`);
+    const handleModify = (email: string) => {
+        window.location.href = `/admin/modify-user/${email}`;
     };
 
     return (
@@ -66,8 +63,8 @@ const UsersPage = () => {
                         <UserInfoRow 
                             key={index} 
                             user={user} 
-                            onDelete={() => handleDelete(user)}
-                            onModify={() => handleModify(user)}
+                            onDelete={() => handleDelete(user.email)}
+                            onModify={() => handleModify(user.email)}
                         />
                     ))}
                 </tbody>

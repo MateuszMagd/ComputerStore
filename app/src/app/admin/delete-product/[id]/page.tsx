@@ -34,9 +34,7 @@ const DeleteProductPage = ({params}: {params: {id: string}}) => {
     }, []);
 
     const handleDelete = async () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const sessionId = urlParams.get('sessionId');
-
+        const sessionId = params.id;
         if (sessionId) {
             try {
                 await deleteProductBySessionId(sessionId);
@@ -44,7 +42,7 @@ const DeleteProductPage = ({params}: {params: {id: string}}) => {
                 window.location.href = "/admin/products";
             } catch (error) {
                 console.error("Error deleting product:", error);
-                alert("Error deleting product.");
+                alert("Error deleting product." + error);
             }
         }
     };

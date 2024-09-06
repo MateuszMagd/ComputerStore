@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getToken } from "./logger-handler";
-import { Product } from "../interfaces/data";
+import { Product, SaveUserProps } from "../interfaces/data";
 
 export const updatePersonalData = async (firstName: string | undefined, lastName: string | undefined, email: string | undefined, phoneNumber: string | undefined) => {
     try {
@@ -53,7 +53,7 @@ export const updateProduct = async (product: Product) => {
     if (!token) {
     throw new Error('Token not found');
     }
-    const response = await axios.post<String>('http://localhost:8090/api/user/post/user/update/address', product, {
+    const response = await axios.post<String>('http://localhost:8090/product/update', product, {
         headers: {
           'Authorization': `${token}`,
         },
@@ -63,3 +63,24 @@ export const updateProduct = async (product: Product) => {
       console.error('Error fetching data:', error);
   }
 }
+
+export const updateUser = async (user: SaveUserProps, email: string) => {
+  try {
+    const token = getToken();
+    if (!token) {
+        throw new Error('Token not found');
+    }
+    await axios.post('http://localhost:8090/api/user/post/user/update', user, {
+        headers: {
+            'Authorization': `${token}`,
+        },
+        params: {
+          "email": email,
+        }
+    });
+  } catch(error) {
+    console.error('Error fetching data:', error);
+    throw error
+  }
+  
+};

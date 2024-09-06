@@ -42,4 +42,11 @@ public class ProductService implements IProductService {
     public void save(Product product) {
         productRepository.save(product);
     }
+
+    @Override
+    public void delete(Product product) {
+        productRepository.delete(product);
+    }
+
+
 }

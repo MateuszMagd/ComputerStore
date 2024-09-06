@@ -15,4 +15,6 @@ public interface IUserService {
     void updateUser(User user);
 
     List<User> getAllUsers();
+
+    void delete(User user);
 }

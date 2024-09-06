@@ -28,13 +28,34 @@ export const deleteProductBySessionId = async (sessionId: string) => {
     if (!token) {
       throw new Error('Token not found');
     }
-    console.log(token)
-    const response = await axios.post<String>('http://localhost:8090', sessionId, {
+    const response = await axios.post<String>('http://localhost:8090/product/delete', sessionId, {
       headers: {
         'Authorization': `${token}`,
+        'Content-Type': 'text/plain',
       },
     });
+
   } catch (error) {
     console.error('Error deleting data:', error);
+    throw error;
+  }
+}
+
+export const deleteUserByEmail = async (email: string) => {
+  try {
+    const token = getToken();
+    if (!token) {
+      throw new Error('Token not found');
+    }
+    const response = await axios.post('http://localhost:8090/api/user/delete', email, {
+      headers: {
+        'Authorization': `${token}`,
+        'Content-Type': 'text/plain',
+      },
+    });
+
+  } catch (error) {
+    console.error('Error deleting data:', error);
+    throw error;
   }
 }
