@@ -1,5 +1,6 @@
 package com.app.backend.service;
 
+import com.app.backend.Enums.ProductType;
 import com.app.backend.entities.Product;
 import com.app.backend.repository.ProductRepository;
 import com.app.backend.service.interfaces.IProductService;
@@ -46,6 +47,16 @@ public class ProductService implements IProductService {
     @Override
     public void delete(Product product) {
         productRepository.delete(product);
+    }
+
+    @Override
+    public List<Product> getProductByProductTypeAsc(ProductType productType) {
+        return productRepository.findAllByTypeOrderByNameAsc(productType);
+    }
+
+    @Override
+    public List<Product> getProductByProductTypeDesc(ProductType productType) {
+        return productRepository.findAllByTypeOrderByNameDesc(productType);
     }
 
 

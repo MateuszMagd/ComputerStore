@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Cart, Product, User } from "@/components/interfaces/data";
+import { Cart, Product, ProductType, User } from "@/components/interfaces/data";
 import { getToken } from "./logger-handler";
 
 export const fetchBestProducts = async (): Promise<Product[] | null> => {
@@ -162,6 +162,37 @@ export const fetchUserByEmail = async (email: string): Promise<User> => {
       },
     });
 
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
+  }
+  
+
+};
+
+
+export const fetchProductsByTypeDesc = async (productType: ProductType): Promise<Product[]> => {
+  try {
+    const response = await axios.get<Product[]>(`http://localhost:8090/product/all/desc/` + productType);
+    response.data.forEach(product => {
+      product.photo = `data:image/jpeg;base64,${product.photo}`;
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
+  }
+  
+
+};
+
+export const fetchProductsByTypeAsc = async (productType: ProductType): Promise<Product[]> => {
+  try {
+    const response = await axios.get<Product[]>(`http://localhost:8090/product/all/asc/` + productType);
+    response.data.forEach(product => {
+      product.photo = `data:image/jpeg;base64,${product.photo}`;
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);

@@ -1,5 +1,6 @@
 package com.app.backend.repository;
 
+import com.app.backend.Enums.ProductType;
 import com.app.backend.entities.Product;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> getFiveProducts(Pageable pageable);
     Product getProductsBySessionId(String sessionId);
 
+    List<Product> findAllByTypeOrderByNameAsc(ProductType type);
+    List<Product> findAllByTypeOrderByNameDesc(ProductType type);
 }

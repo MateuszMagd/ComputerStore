@@ -2,7 +2,7 @@
 import ItemCard from "@/components/itemcard";
 import { Cpu, Microchip, Computer } from 'lucide-react';
 import Link from "next/link";
-import { Product } from "@/components/interfaces/data";
+import { Product, ProductType } from "@/components/interfaces/data";
 import React from "react";
 
 export default function Home({ ourBestProducts }: { ourBestProducts: Product[] }) {
@@ -13,13 +13,13 @@ export default function Home({ ourBestProducts }: { ourBestProducts: Product[] }
                     <h1 className="px-10 py-5 text-4xl font-bold ">Our components</h1>
                     <div className="flex flex-col px-16 space-y-2">
                         <div >
-                            <Link href="./" className="flex flex-row"><Cpu />  Procesors</Link>
+                            <Link href={"/parts/"+ ProductType.CPU} className="flex flex-row"><Cpu />  Procesors</Link>
                         </div>
                         <div>
-                            <Link href="./" className="flex flex-row"><Microchip /> Graphic Card</Link>
+                            <Link href={"/parts/"+ ProductType.GPU} className="flex flex-row"><Microchip /> Graphic Card</Link>
                         </div>
                         <div>
-                            <Link href="./" className="flex flex-row"><Computer /> Motherboard</Link>
+                            <Link href={"/parts/"+ ProductType.Motherboard} className="flex flex-row"><Computer /> Motherboard</Link>
                         </div>
                     </div>
                 </div>

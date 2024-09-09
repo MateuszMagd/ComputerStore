@@ -13,7 +13,13 @@ export default async function Page() {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-
+  if(ourBestProducts == null) {
+    return (
+      <div>
+        Noting to see . . .
+      </div>
+    )
+  }
 
   return (
     <Home ourBestProducts={ourBestProducts} />

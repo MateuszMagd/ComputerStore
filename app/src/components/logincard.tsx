@@ -73,7 +73,7 @@ const LoginCard = () => {
                         type="submit"
                         className="w-full px-4 py-2 text-white bg-black rounded-full  focus:outline-none focus:ring-2 "
                     >
-                        Register
+                        Log in
                     </button>
                 </form>
                 <div className='mt-2 p-5 text-center'>

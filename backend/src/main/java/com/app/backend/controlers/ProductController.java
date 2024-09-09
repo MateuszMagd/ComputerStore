@@ -1,5 +1,6 @@
 package com.app.backend.controlers;
 
+import com.app.backend.Enums.ProductType;
 import com.app.backend.authenticate.TokenUtill.JwtTokenUtill;
 import com.app.backend.dto.ProductDto;
 import com.app.backend.dto.UserNewDto;
@@ -177,6 +178,30 @@ public class ProductController {
             return ResponseEntity.ok("Ok");
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Something went wrong . . .");
+        }
+    }
+
+    @GetMapping("/all/desc/{productType}")
+    public ResponseEntity<?> getAllProductAsc(@PathVariable ProductType productType) {
+        try{
+            List<Product> productsList = productService.getProductByProductTypeDesc(productType);
+            List<ProductDto> productDtoList = ProductToDTOConverter.ConvertListToDTO(productsList);
+
+            return ResponseEntity.ok(productDtoList);
+         } catch (Exception ex) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/all/asc/{productType}")
+    public ResponseEntity<?> getAllProductDesc(@PathVariable ProductType productType) {
+        try{
+            List<Product> productsList = productService.getProductByProductTypeAsc(productType);
+            List<ProductDto> productDtoList = ProductToDTOConverter.ConvertListToDTO(productsList);
+
+            return ResponseEntity.ok(productDtoList);
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }
